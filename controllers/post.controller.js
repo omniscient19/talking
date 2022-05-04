@@ -1,4 +1,3 @@
-const { ReadStream } = require("fs");
 const postModel = require("../models/post.model");
 const PostModel = require("../models/post.model");
 const UserModel = require("../models/user.model");

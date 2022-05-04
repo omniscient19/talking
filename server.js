@@ -9,7 +9,7 @@ const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 const cors = require("cors");
 
 const app = express();
-
+app.use("/js", express.static(__dirname + "/public/js"));
 const corsOptions = {
   origin: process.env.CLIENT_URL,
   credentials: true,

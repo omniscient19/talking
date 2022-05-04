@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import SignUpFormUp from "./SignUpForm";
 
 const Log = (props) => {
