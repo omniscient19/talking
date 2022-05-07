@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
-import cookieParser from "cookie-parser";
+import cookie from "js-cookie";
 
-const logout = () => {
+const Logout = () => {
   const removeCookie = (key) => {
-    if (window !== "undifined") {
-      cookieParser.remove(key, { expires: 1 });
+    if (window !== "undefined") {
+      cookie.remove(key, { expires: 1 });
     }
   };
+
   const logout = async () => {
     await axios({
-      methode: "get",
+      method: "get",
       url: `${process.env.REACT_APP_API_URL}api/user/logout`,
       withCredentials: true,
     })
@@ -22,8 +23,9 @@ const logout = () => {
 
   return (
     <li onClick={logout}>
-      <img src=".img/icons/logout.svg" alt="alogout" />
+      <img src="./img/icons/logout.svg" alt="logout" />
     </li>
   );
 };
-export default logout;
+
+export default Logout;

@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 const { isEmail } = require("validator");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
-    speudo: {
+    pseudo: {
       type: String,
-      require: true,
-      minlength: 3,
-      maxLenght: 55,
+      required: true,
+      minLength: 3,
+      maxLength: 55,
       unique: true,
       trim: true,
     },
-
     email: {
       type: String,
       required: true,
@@ -30,7 +30,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "./uploads/profil/random-user.png",
     },
-
     bio: {
       type: String,
       max: 1024,
@@ -38,7 +37,6 @@ const userSchema = new mongoose.Schema(
     followers: {
       type: [String],
     },
-
     following: {
       type: [String],
     },
@@ -54,14 +52,14 @@ const userSchema = new mongoose.Schema(
 // play function before save into display: 'block',
 userSchema.pre("save", async function (next) {
   const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(This.password, salt);
+  this.password = await bcrypt.hash(this.password, salt);
   next();
 });
 
 userSchema.statics.login = async function (email, password) {
   const user = await this.findOne({ email });
   if (user) {
-    const auth = awaitbcrypt.compare(password, user.password);
+    const auth = await bcrypt.compare(password, user.password);
     if (auth) {
       return user;
     }

@@ -5,13 +5,14 @@ import UpdateProfil from "../components/Profil/UpdateProfil";
 
 const Profil = () => {
   const uid = useContext(UidContext);
+
   return (
     <div className="profil-page">
       {uid ? (
-        <h1>UPDATE PAGE</h1>
+        <UpdateProfil />
       ) : (
         <div className="log-container">
-          <log signin={false} signup={true} />
+          <Log signin={false} signup={true} />
           <div className="img-container">
             <img src="./img/log.svg" alt="img-log" />
           </div>

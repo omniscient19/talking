@@ -1,43 +1,45 @@
 import React, { useState } from "react";
-import SignUpFormUp from "./SignUpForm";
+import SignInForm from "./SignInForm";
+import SignUpForm from "./SignUpForm";
 
 const Log = (props) => {
-  const [SignUpModal, setSignUpModal] = useState(props.signup);
-  const [SignInModal, setSignInModal] = useState(props.signin);
+  const [signUpModal, setSignUpModal] = useState(props.signup);
+  const [signInModal, setSignInModal] = useState(props.signin);
 
   const handleModals = (e) => {
     if (e.target.id === "register") {
       setSignInModal(false);
       setSignUpModal(true);
     } else if (e.target.id === "login") {
-      setSignInModal(false);
-      setSignUpModal(true);
+      setSignUpModal(false);
+      setSignInModal(true);
     }
   };
 
   return (
     <div className="connection-form">
-      <div className="from-container">
+      <div className="form-container">
         <ul>
           <li
-            onclick={handleModals}
+            onClick={handleModals}
             id="register"
-            className={SignUpModal ? "active-btn" : null}
+            className={signUpModal ? "active-btn" : null}
           >
             S'inscrire
           </li>
           <li
-            onclick={handleModals}
+            onClick={handleModals}
             id="login"
-            className={SignUInModal ? "active-btn" : null}
+            className={signInModal ? "active-btn" : null}
           >
             Se connecter
           </li>
         </ul>
-        {SignUpModal && <SignUpFormUp />}
-        {SignInModal && <SignInFormUp />}
+        {signUpModal && <SignUpForm />}
+        {signInModal && <SignInForm />}
       </div>
     </div>
   );
 };
-export default log;
+
+export default Log;

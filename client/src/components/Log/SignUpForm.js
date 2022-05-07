@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
+import SignInForm from "./SignInForm";
+
 const SignUpForm = () => {
   const [formSubmit, setFormSubmit] = useState(false);
-  const [pseudo, setseudo] = useState("");
+  const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [controlPassword, setcontrolPassword] = useState("");
+  const [controlPassword, setControlPassword] = useState("");
 
   const handleRegister = async (e) => {
-    e.preventdefault();
+    e.preventDefault();
     const terms = document.getElementById("terms");
     const pseudoError = document.querySelector(".pseudo.error");
     const emailError = document.querySelector(".email.error");
     const passwordError = document.querySelector(".password.error");
     const passwordConfirmError = document.querySelector(
-      ".password-confirm.error.error"
+      ".password-confirm.error"
     );
     const termsError = document.querySelector(".terms.error");
+
     passwordConfirmError.innerHTML = "";
     termsError.innerHTML = "";
 
@@ -24,11 +27,12 @@ const SignUpForm = () => {
       if (password !== controlPassword)
         passwordConfirmError.innerHTML =
           "Les mots de passe ne correspondent pas";
+
       if (!terms.checked)
         termsError.innerHTML = "Veuillez valider les conditions générales";
     } else {
       await axios({
-        methode: "post",
+        method: "post",
         url: `${process.env.REACT_APP_API_URL}api/user/register`,
         data: {
           pseudo,
@@ -37,6 +41,7 @@ const SignUpForm = () => {
         },
       })
         .then((res) => {
+          console.log(res);
           if (res.data.errors) {
             pseudoError.innerHTML = res.data.errors.pseudo;
             emailError.innerHTML = res.data.errors.email;
@@ -48,13 +53,14 @@ const SignUpForm = () => {
         .catch((err) => console.log(err));
     }
   };
+
   return (
     <>
       {formSubmit ? (
         <>
           <SignInForm />
           <span></span>
-          <h4 className="suceess">
+          <h4 className="success">
             Enregistrement réussi, veuillez-vous connecter
           </h4>
         </>
@@ -77,7 +83,7 @@ const SignUpForm = () => {
             type="text"
             name="email"
             id="email"
-            onChange={(e) => setemail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
           <div className="email error"></div>
@@ -88,26 +94,27 @@ const SignUpForm = () => {
             type="password"
             name="password"
             id="password"
-            onChange={(e) => setpassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
+          <div className="password error"></div>
           <br />
-          <label htmlFor="password-conf">Confirmer mot de pass</label>
+          <label htmlFor="password-conf">Confirmer mot de passe</label>
           <br />
           <input
             type="password"
             name="password"
             id="password-conf"
-            onChange={(e) => setControlpassword(e.target.value)}
-            value={controlpassword}
+            onChange={(e) => setControlPassword(e.target.value)}
+            value={controlPassword}
           />
           <div className="password-confirm error"></div>
           <br />
           <input type="checkbox" id="terms" />
           <label htmlFor="terms">
             J'accepte les{" "}
-            <a href="/" target="blank" rel="noopener nreferrer">
-              condition générales
+            <a href="/" target="_blank" rel="noopener noreferrer">
+              conditions générales
             </a>
           </label>
           <div className="terms error"></div>
@@ -118,4 +125,5 @@ const SignUpForm = () => {
     </>
   );
 };
-export default SignUpFormUp;
+
+export default SignUpForm;

@@ -1,27 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const SignInForm = () => {
   const [email, setEmail] = useState("");
-  const [password, setpassword] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = (e) => {
-    e.preventdefault();
-    const emailError = document.querySelector("email, error");
-    const passwordError = document.querySelector("password, error");
+    e.preventDefault();
+    const emailError = document.querySelector(".email.error");
+    const passwordError = document.querySelector(".password.error");
+
     axios({
-      methode: "post",
+      method: "post",
       url: `${process.env.REACT_APP_API_URL}api/user/login`,
-      widhtCredentials: true,
+      withCredentials: true,
       data: {
-        email: email,
+        email,
         password,
       },
     })
       .then((res) => {
+        console.log(res);
         if (res.data.errors) {
-          emailError.innertHTML = res.data.errors.email;
-          passwordError.innertHTML = res.data.errors.password;
+          emailError.innerHTML = res.data.errors.email;
+          passwordError.innerHTML = res.data.errors.password;
         } else {
           window.location = "/";
         }
@@ -39,24 +41,25 @@ const SignInForm = () => {
         type="text"
         name="email"
         id="email"
-        onChange={(e) => setEmail("e.target.value")}
+        onChange={(e) => setEmail(e.target.value)}
         value={email}
       />
-      <div className="email.error"></div>
+      <div className="email error"></div>
       <br />
-      <label htmlFor="password"></label>
+      <label htmlFor="password">Mot de passe</label>
       <br />
       <input
         type="password"
         name="password"
         id="password"
-        onChange={(e) => setPassword("e.target.value")}
-        value={email}
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
       />
-      <div className="password.error"></div>
+      <div className="password error"></div>
       <br />
       <input type="submit" value="Se connecter" />
     </form>
   );
 };
+
 export default SignInForm;
